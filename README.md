@@ -1,5 +1,4 @@
 ```markdown
-<div dir="rtl">
 
 # SE-LAB-Patterns
 
