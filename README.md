@@ -1,4 +1,3 @@
-```markdown
 
 # SE-LAB-Patterns
 
