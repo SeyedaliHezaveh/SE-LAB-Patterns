@@ -46,3 +46,62 @@
 
 
 بخش دوم - تغییر کتابخانه
+مهاجرت از کتابخانه **JUNG** به **JGraphT** شامل تغییرات زیر بود:
+
+#### **1. تغییر وابستگی‌ها در فایل Maven (`pom.xml`)**
+- وابستگی JUNG حذف و وابستگی JGraphT اضافه شد:
+  ```xml
+  <!-- حذف وابستگی JUNG -->
+  <dependency>
+      <groupId>net.sf.jung</groupId>
+      <artifactId>jung-graph-impl</artifactId>
+      <version>2.1.1</version>
+  </dependency>
+
+  <!-- اضافه کردن وابستگی JGraphT -->
+  <dependency>
+      <groupId>org.jgrapht</groupId>
+      <artifactId>jgrapht-core</artifactId>
+      <version>1.5.2</version>
+  </dependency>
+  ```
+
+
+#### **2. تغییر در کلاس Adapter**
+- کلاس Adapter برای پشتیبانی از JGraphT بازنویسی شد. به جای متدهای JUNG، از API‌های JGraphT استفاده کردیم:
+  ```java
+  // Adapter برای JGraphT
+  public class JGraphTAdapter implements GraphLibrary {
+      private Graph<String, DefaultEdge> graph;
+
+      public JGraphTAdapter() {
+          graph = new SimpleGraph<>(DefaultEdge.class);
+      }
+
+      @Override
+      public void addEdge(String vertex1, String vertex2) {
+          graph.addVertex(vertex1);
+          graph.addVertex(vertex2);
+          graph.addEdge(vertex1, vertex2);
+      }
+
+      @Override
+      public List<String> traverse(String startVertex) {
+          // پیاده‌سازی روش پیمایش (BFS یا DFS)
+          return new ArrayList<>();
+      }
+  }
+  ```
+
+#### **3. چالش‌های مهاجرت**
+- **تفاوت در API‌ها:** 
+  - JUNG برای یال‌ها از رشته‌ها استفاده می‌کند، اما JGraphT از کلاس DefaultEdge.
+  - نیاز به بازنویسی بخش‌هایی از کد برای هماهنگی با JGraphT.
+- **تغییر رفتار:** 
+  - برخی از متدهای پیمایش در JGraphT متفاوت عمل می‌کنند و به تطبیق نیاز داشتند.
+
+
+#### **نتیجه**
+با استفاده از الگوی **Adapter**، تغییر کتابخانه‌ها به صورت شفاف انجام شد و نیازی به تغییر در بخش‌های اصلی پروژه نبود. مهاجرت تنها با بازنویسی کلاس Adapter و تغییر وابستگی‌ها در Maven مدیریت شد.
+
+
