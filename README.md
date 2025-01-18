@@ -10,7 +10,7 @@
 
 
 برای پیاده‌سازی الگوی **Adapter** به روش **Object Scope**:
-<div dir="rtl">
+<div style="direction: rtl; text-align: right;">
 
 1. **تعریف واسط (Interface):** یک واسط برای عملیات گراف (مثل افزودن یال و پیمایش) ایجاد می کنیم:
    ```java
